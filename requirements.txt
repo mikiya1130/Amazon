@@ -1,0 +1,4 @@
+black==21.6b0
+Django==3.2.4
+opencv-python==4.5.2.54
+python-dotenv==0.18.0
