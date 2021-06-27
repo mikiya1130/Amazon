@@ -1,0 +1,17 @@
+{
+    "name": "Amazon",
+
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "..",
+    },
+
+    "extensions": [
+        "ms-python.python",
+        "njpwerner.autodocstring",
+        "donjayamanne.githistory",
+        "forbeslindesay.forbeslindesay-taskrunner",
+    ],
+
+    "forwardPorts": [8000]
+}
