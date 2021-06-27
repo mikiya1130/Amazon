@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from ..exceptions import NotFoundChopsticksError
 
 
 def get_chopsticks_length_per_pixel(img: np.ndarray) -> float:

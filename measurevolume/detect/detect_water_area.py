@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from ..exceptions import NotFoundGlassError
 
 
 def detect_water_area(img: np.ndarray) -> np.ndarray:
