@@ -4,6 +4,7 @@ from django.http.request import HttpRequest
 from django.http.response import JsonResponse
 
 import cv2
+from .detect import detect_water_area, get_chopsticks_length_per_pixel
 
 
 def index(request):
