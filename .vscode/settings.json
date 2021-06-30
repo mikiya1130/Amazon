@@ -8,7 +8,6 @@
     "files.eol": "\n",
     "files.exclude": {
         "venv": true,
-        ".python-version": true,
         "**/__pycache__": true,
     },
     "editor.tabSize": 4,
