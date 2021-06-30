@@ -6,12 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'measurevolume/css/style.css' %}">
     <script type="text/javascript" src="{% static 'measurevolume/js/script.js' %}" charset="UTF-8" defer></script>
 </head>
 
 <body>
     <p>Hello World</p>
+    <p>{{ response_test }}</p>
+    <video id="local_video"autoplay style="width: 300px; height:200px; border: 1px solid black;"></video>
+    <canvas id="canvas" width="300" height="200"></canvas>
+    <button onclick="take_picture()">capture</button>
 </body>
 
 </html>
