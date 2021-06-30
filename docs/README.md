@@ -45,7 +45,7 @@
 ## 推奨環境
 
 - VSCode
-- Python 3.9.4
+- Python 3.8.5
 - モジュールは[requirements.txt](../requirements.txt)参照
 
 開発環境が絶対このバージョンでなくてはならないわけではないけど、この環境でテストしてmergeすることにします  

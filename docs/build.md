@@ -22,20 +22,20 @@ python -V
 cd <project root dir>
 ```
 
-### pyenv(この環境限定でPythonのversionを変更する用)(3.9.4じゃなかったら作業)(pyenv使ったことないので、ネットの方が参考なるかも)
+### pyenv(この環境限定でPythonのversionを変更する用)(3.8.5じゃなかったら作業)(pyenv使ったことないので、ネットの方が参考なるかも)
 
 (pyenvのインストールは省略(調べて))  
 ```
 pyenv versions
 ```
-3.9.4がなければインストール可能なバージョン確認、インストール  
+3.8.5がなければインストール可能なバージョン確認、インストール  
 ```
 pyenv install -l
-pyenv install 3.9.4
+pyenv install 3.8.5
 ```
-もう一度`pyenv versions`で3.9.4にアスタリスク付いてなければ↓  
+もう一度`pyenv versions`で3.8.5にアスタリスク付いてなければ↓  
 ```
-pyenv local 3.9.4  # カレントディレクトリ以下ではこのバージョンを使う
+pyenv local 3.8.5  # カレントディレクトリ以下ではこのバージョンを使う
 ```
 
 ### venv(この環境限定でモジュールをインストールする用)
