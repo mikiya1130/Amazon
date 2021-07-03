@@ -4,6 +4,9 @@ from django.http.request import HttpRequest
 from django.http.response import JsonResponse
 
 import cv2
+import base64
+import numpy as np
+import json
 from .detect import detect_water_area, get_chopsticks_length_per_pixel
 from .exceptions import NotFoundGlassError, NotFoundChopsticksError
 
@@ -32,4 +35,30 @@ def calc_volume(request: HttpRequest) -> JsonResponse:
     Note:
         POSTメソッドのみ受け付ける
     """
-    pass
+    img_base64 = request.POST["img_base64"]
+    img_data = base64.b64decode(img_base64)
+    img_np = np.frombuffer(img_data, np.uint8)
+    src = cv2.imdecode(img_np, cv2.IMREAD_ANYCOLOR)
+
+    try:
+        img = detect_water_area()
+        mm_pixel = get_chopsticks_length_per_pixel()
+
+    except NotFoundGlassError:
+        exist_glass = False
+        volume = -1
+
+    except NotFoundChopsticksError:
+        exist_chopsticks = False
+        volume = -1
+
+    else:
+        volume = 200
+
+    finally:
+        data = {
+            "exist_glass": exist_glass,
+            "exist_chopsticks": exist_chopsticks,
+            "volume": volume,
+        }
+        return JsonResponse(data)
