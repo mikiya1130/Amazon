@@ -1,3 +1,4 @@
+from django import shortcuts
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.http.request import HttpRequest
@@ -6,7 +7,6 @@ from django.http.response import JsonResponse
 import cv2
 import base64
 import numpy as np
-import json
 from .detect import detect_water_area, get_chopsticks_length_per_pixel
 from .exceptions import NotFoundGlassError, NotFoundChopsticksError
 
@@ -41,8 +41,8 @@ def calc_volume(request: HttpRequest) -> JsonResponse:
     src = cv2.imdecode(img_np, cv2.IMREAD_ANYCOLOR)
 
     try:
-        img = detect_water_area()
-        mm_pixel = get_chopsticks_length_per_pixel()
+        img = detect_water_area(src)
+        mm_pixel = get_chopsticks_length_per_pixel(src)
 
     except NotFoundGlassError:
         exist_glass = False
@@ -54,6 +54,8 @@ def calc_volume(request: HttpRequest) -> JsonResponse:
 
     else:
         volume = 200
+        exist_glass = True
+        exist_chopsticks = True
 
     finally:
         data = {
