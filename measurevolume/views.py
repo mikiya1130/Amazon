@@ -7,6 +7,7 @@ from django.http.response import JsonResponse
 import cv2
 import base64
 import numpy as np
+import math
 from .detect import detect_water_area, get_chopsticks_length_per_pixel
 from .exceptions import NotFoundGlassError, NotFoundChopsticksError
 
@@ -53,7 +54,17 @@ def calc_volume(request: HttpRequest) -> JsonResponse:
         volume = -1
 
     else:
-        volume = 200
+        volume = 0
+        p = 0
+        while p < img.shape[0]:
+            s = img[p : p + 3, 0 : img.shape[1]]
+            o = np.count_nonzero(s)
+            r = o / 6
+            h = 3 * mm_pixel
+            v = math.pi * r * r * h
+            volume += v
+            p += 3
+
         exist_glass = True
         exist_chopsticks = True
 
