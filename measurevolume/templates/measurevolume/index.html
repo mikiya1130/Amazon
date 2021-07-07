@@ -1,6 +1,6 @@
 <!-- 
     TODO
-    videoのサイズ
+    CSS決める
     button後で消す
  -->
 {% load static %}
@@ -21,9 +21,9 @@
         <video id="local_video"autoplay></video>
     </div>
     <div class="canvas_wrapper">
-        <canvas id="canvas" style="display:none"></canvas>
+        <canvas id="canvas"></canvas>
     </div>
-    <button onclick="take_picture()">capture</button>
+    <button onclick="takePicture()">capture</button>
     <div id="error_message"></div>
     <div id="volume"></div>
 

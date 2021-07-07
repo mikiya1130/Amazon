@@ -1,4 +1,17 @@
-#local_video{
-    width: 800px;
-    height: 800px;
+.video_wrapper {
+    text-align: center;
+}
+
+#error_message {
+    height: 20%;
+    text-align: center;
+}
+
+#volume {
+    height: 20%;
+    text-align: center;
+}
+
+#canvas {
+    display: none;
 }
