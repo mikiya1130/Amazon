@@ -1,3 +1,8 @@
+<!-- 
+    TODO
+    CSS決める
+    button後で消す
+ -->
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -12,10 +17,16 @@
 </head>
 
 <body>
-    <p>{{ response_test }}</p>
-    <video id="local_video"autoplay style="width: 300px; height:200px; border: 1px solid black;"></video>
-    <canvas id="canvas" width="300" height="200"></canvas>
-    <button onclick="take_picture()">capture</button>
+    <div class="video_wrapper">
+        <video id="local_video"autoplay></video>
+    </div>
+    <div class="canvas_wrapper">
+        <canvas id="canvas"></canvas>
+    </div>
+    <button onclick="takePicture()">capture</button>
+    <div id="error_message"></div>
+    <div id="volume"></div>
+
 </body>
 
 </html>
