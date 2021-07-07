@@ -1,4 +1,3 @@
-from django import shortcuts
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.http.request import HttpRequest
@@ -6,6 +5,7 @@ from django.http.response import JsonResponse
 
 import cv2
 import base64
+import json
 import numpy as np
 import math
 from .detect import detect_water_area, get_chopsticks_length_per_pixel
@@ -36,42 +36,47 @@ def calc_volume(request: HttpRequest) -> JsonResponse:
     Note:
         POSTメソッドのみ受け付ける
     """
-    img_base64 = request.POST["img_base64"]
+
+    img_base64 = json.loads(request.body)["img_base64"]
     img_data = base64.b64decode(img_base64)
     img_np = np.frombuffer(img_data, np.uint8)
     src = cv2.imdecode(img_np, cv2.IMREAD_ANYCOLOR)
 
+    exist_glass = False
+    exist_chopsticks = False
+    volume = 0
+
     try:
         img = detect_water_area(src)
-        mm_pixel = get_chopsticks_length_per_pixel(src)
 
     except NotFoundGlassError:
         exist_glass = False
         volume = -1
+
+    else:
+        exist_glass = True
+
+    try:
+        mm_pixel = get_chopsticks_length_per_pixel(src)
 
     except NotFoundChopsticksError:
         exist_chopsticks = False
         volume = -1
 
     else:
-        volume = 0
-        p = 0
-        while p < img.shape[0]:
-            s = img[p : p + 3, 0 : img.shape[1]]
-            o = np.count_nonzero(s)
-            r = o / 6
-            h = 3 * mm_pixel
-            v = math.pi * r * r * h
-            volume += v
-            p += 3
+        exist_chopsticks = True
+
+    if exist_glass and exist_chopsticks:
+        one_cnt = np.count_nonzero(img, axis=1)
+        area_of_circle = math.pi * (one_cnt * mm_pixel / 2) ** 2
+        volume = np.sum(area_of_circle) * mm_pixel
 
         exist_glass = True
         exist_chopsticks = True
 
-    finally:
-        data = {
-            "exist_glass": exist_glass,
-            "exist_chopsticks": exist_chopsticks,
-            "volume": volume,
-        }
-        return JsonResponse(data)
+    data = {
+        "exist_glass": exist_glass,
+        "exist_chopsticks": exist_chopsticks,
+        "volume": volume,
+    }
+    return JsonResponse(data)
