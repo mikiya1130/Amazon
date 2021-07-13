@@ -22,7 +22,7 @@ def calc_volume(request: HttpRequest) -> JsonResponse:
 
     Args:
         request (HttpRequest): Django HttpRequest オブジェクト
-                               request.POST["img_base64"]でbase64エンコード画像取得
+                               json.loads(request.body)["img_base64"]でbase64エンコード画像取得
 
     Returns:
         JsonResponse: JsonResponse オブジェクトは Django HttpResponse クラスのサブクラス
