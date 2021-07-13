@@ -43,6 +43,12 @@ git push -u origin HEAD
 仮にググって出てきても、-fオプションは注意  
 相談してからでよろしくお願いします  
 
+## developの変更を作業ブランチに取り込み
+
+```
+git merge --no-ff origin/master
+```
+
 ## python manage.py
 
 テストサーバー起動  
