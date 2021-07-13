@@ -22,20 +22,20 @@ python -V
 cd <project root dir>
 ```
 
-### pyenv(この環境限定でPythonのversionを変更する用)(3.8.5じゃなかったら作業)(pyenv使ったことないので、ネットの方が参考なるかも)
+### pyenv(この環境限定でPythonのversionを変更する用)(3.7.xじゃなかったら作業)(pyenv使ったことないので、ネットの方が参考なるかも)
 
 (pyenvのインストールは省略(調べて))  
 ```
 pyenv versions
 ```
-3.8.5がなければインストール可能なバージョン確認、インストール  
+3.7.xがなければインストール可能なバージョン確認、インストール  
 ```
 pyenv install -l
-pyenv install 3.8.5
+pyenv install 3.7.x
 ```
-もう一度`pyenv versions`で3.8.5にアスタリスク付いてなければ↓  
+もう一度`pyenv versions`で3.7.xにアスタリスク付いてなければ↓  
 ```
-pyenv local 3.8.5  # カレントディレクトリ以下ではこのバージョンを使う
+pyenv local 3.7.x  # カレントディレクトリ以下ではこのバージョンを使う
 ```
 
 ### venv(この環境限定でモジュールをインストールする用)
@@ -71,14 +71,17 @@ generate_secretkey_setting.pyはDjangoのシークレットキーを生成して
 結果を.envファイルに書き込む。  
 amazon/settings.pyには定数SECRET_KEYを環境変数から読み込む設定を書いています。  
 
-## 【任意】VSCode拡張機能追加
+## 【任意】VSCode推奨設定
 
-### 推奨拡張機能
+### settings.json
+
+`.vscode/settings.json`に[ここ](https://github.com/mikiya1130/Amazon/blob/0231e0cb09/.vscode/settings.json)の内容をコピペ  
+
+### 拡張機能の追加
 
 - Python(ms-python.python),
 - Python Docstring Generator(njpwerner.autodocstring),
 - Git History(donjayamanne.githistory),
-- Task Runner(forbeslindesay.forbeslindesay-taskrunner),
 
 EXTENSIONSペインの「RECOMMENDED」タブ内に表示されてるはず。  
 フロント関連はなくてごめんなさい。  
