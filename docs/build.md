@@ -71,14 +71,17 @@ generate_secretkey_setting.pyはDjangoのシークレットキーを生成して
 結果を.envファイルに書き込む。  
 amazon/settings.pyには定数SECRET_KEYを環境変数から読み込む設定を書いています。  
 
-## 【任意】VSCode拡張機能追加
+## 【任意】VSCode推奨設定
 
-### 推奨拡張機能
+### settings.json
+
+`.vscode/settings.json`に[ここ](https://github.com/mikiya1130/Amazon/blob/0231e0cb09/.vscode/settings.json)の内容をコピペ  
+
+### 拡張機能の追加
 
 - Python(ms-python.python),
 - Python Docstring Generator(njpwerner.autodocstring),
 - Git History(donjayamanne.githistory),
-- Task Runner(forbeslindesay.forbeslindesay-taskrunner),
 
 EXTENSIONSペインの「RECOMMENDED」タブ内に表示されてるはず。  
 フロント関連はなくてごめんなさい。  

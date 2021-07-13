@@ -43,20 +43,21 @@ git push -u origin HEAD
 仮にググって出てきても、-fオプションは注意  
 相談してからでよろしくお願いします  
 
-## python manage.pyの実行
+## python manage.py
 
-### runserver
+テストサーバー起動  
 
-VSCodeの拡張機能「Task Runner(sanaajani.taskrunnercode)」を入れるとExplorerペインの一番下に「TASK RUNNER」ってタブが追加されます。  
-その中の`runserver`クリックで`python manage.py runserver`相当のコマンドを実行できます。  
+```
+python manage.py runserver
+```
 
-### test(6/27現在テスト未作成)
+停止は`Ctrl-c`
 
-同じく「TASK RUNNER」タブの`test`でテスト実行できます。  
-どのテストを実行するか入力してEnterしてください。  
-空白のままEnterで全てのテストを実行します。  
-`python manage.py test <test_label>`相当。  
+テスト実行
 
+```
+python manage.py test <test_label>
+```
 
 ## ファイルのリネーム、移動、削除
 

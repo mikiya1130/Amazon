@@ -40,7 +40,8 @@
 ### 自動フォーマット
 
 - black使用
-- vscode使うなら特に気にせんでいいように設定したはず(保存すると勝手に走るはず)
+- ~~vscode使うなら特に気にせんでいいように設定したはず(保存すると勝手に走るはず)~~
+- 環境によって`.vscode`フォルダをGit管理するとまずかったので、各自`.vscode/settings.json`に[ここ](https://github.com/mikiya1130/Amazon/blob/0231e0cb09/.vscode/settings.json)の内容をコピペ推奨
 
 ## 推奨環境
 
