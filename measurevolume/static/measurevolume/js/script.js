@@ -1,42 +1,21 @@
-// TODO
-// videoサイズ
-// エラーメッセージ表示について
-//     -> alert表示 or 画像下部にメッセージを表示
+// 変更点
+// 縦横判定の関数を削除. setInterval()のif文で直接判定
+// videoのサイズ取得->840超えなら縮小
+
 
 window.onload = function Init(){
 	startVideo();
 }
-
-//document.getElementById('error_message').innerHTML = "test message";
-//document.getElementById('volume').innerHTML = "test volume";
-
 // 0.5秒ごとにスマホの向き判定
 // 横向きならデータをサーバへ送信
-// TODO: captureボタンのみにするべき？
 setInterval(() => {
-	let isVertical = orientCheck();
-	if(isVertical === false){
+	if(window.innerHeight < window.innerWidth){
 		takePicture();
 	}else{
 		displayMessage = "画面を横向きにしてください"
-		// 画面表示
-		// document.getElementById('error_message').innerHTML = displayMessage;
-		// アラート表示
 		alert(displayMessage)
 	}
 }, 500);
-
-// 画面の向きを判定
-function orientCheck(){
-	if (window.innerHeight > window.innerWidth) {
-		/* 縦画面時の処理 */
-		return true;
-
-	} else {
-		/* 横画面時の処理 */
-		return false;
-	}
-};
 
 // デフォルトでリアカメラを起動
 // 無い場合はフロントカメラを起動
@@ -47,7 +26,7 @@ function startVideo() {
 		}, audio: false})
 		.then(function (stream) {
 			document.getElementById('local_video').srcObject = stream;
-		}).catch(function (error) { // 失敗時
+		}).catch(function (error) {
 			console.error('mediaDevice.getUserMedia() error:', error);
 			console.log('There is not rear camera.')
 			navigator.mediaDevices.getUserMedia({video: {
@@ -68,14 +47,21 @@ function takePicture() {
 	let canvas = document.getElementById('canvas');	// videoのstreamをcanvasに書き出す方法.
 	let video = document.getElementById('local_video');
 	let ctx = canvas.getContext('2d');
-	let w = video.offsetWidth * 0.5;	// videoの横幅取得.
-	let h = video.offsetHeight * 0.5;	// videoの縦幅取得.
-	canvas.setAttribute("width", w);	// canvasに書き出すための横幅セット.
-	canvas.setAttribute("height", h);	// canvasに書き出すための縦幅セット.
-	ctx.drawImage(video, 0, 0, w, h);	// videoの画像をcanvasに書き出し.
+	let originai_width = video.offsetWidth;
+	let original_Height = video.offsetHeight;
+	let width, height;
+	if (originai_width <= 840) {
+		width = originai_width;
+		height = original_Height;
+	} else {
+		width = 840;
+		height = 840 * (original_Height/originai_width);
+	}
+	canvas.setAttribute("width", width);	// canvasに書き出すための横幅セット.
+	canvas.setAttribute("height", height);	// canvasに書き出すための縦幅セット.
+	ctx.drawImage(video, 0, 0, width, height);	// videoの画像をcanvasに書き出し.
 	let base64 = canvas.toDataURL('image/jpg');	// canvas上の画像をbase64に変換.
 	let picture = base64.replace(/^data:\w+\/\w+;base64,/, '');	// base64変換したデータのプレフィクスを削除.
-	console.log(base64);
 	transferData(picture);
 }
 
