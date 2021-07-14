@@ -73,7 +73,7 @@ amazon/settings.pyには定数SECRET_KEYを環境変数から読み込む設定�
 
 ## 水検出で使用する学習済み重みのDL
 
-1. (ここ)[https://drive.google.com/file/d/1K9q-HwQpR6swK5zrclBFzg_kTX7dGGTR/view?usp=sharing]から学習済みの重みをDL
+1. [ここ](https://drive.google.com/file/d/1K9q-HwQpR6swK5zrclBFzg_kTX7dGGTR/view?usp=sharing)から学習済みの重みをDL
 1. `measurevolume/detect/`に`TrainedModelWeiht1m_steps_Semantic_TrainedWithLabPicsAndCOCO_AllSets.torch`を配置する
 
 ## 【任意】VSCode推奨設定

@@ -46,7 +46,7 @@ git push -u origin HEAD
 ## developの変更を作業ブランチに取り込み
 
 ```
-git merge --no-ff origin/master
+git merge --no-ff origin/develop
 ```
 
 ## python manage.py
