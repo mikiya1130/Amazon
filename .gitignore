@@ -148,3 +148,7 @@ cython_debug/
 
 # Local History for Visual Studio Code
 .history/
+
+# water detect
+OutImage/
+TrainedModelWeiht1m_steps_Semantic_TrainedWithLabPicsAndCOCO_AllSets.torch

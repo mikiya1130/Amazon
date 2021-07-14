@@ -15,4 +15,4 @@ def get_chopsticks_length_per_pixel(img: np.ndarray) -> float:
     Raises:
         NotFoundChopsticksError: 割り箸が検出できなかった場合に送出
     """
-    pass
+    return 0.1  # dummy
