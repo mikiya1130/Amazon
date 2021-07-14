@@ -6,6 +6,7 @@ import cv2
 import base64
 import json
 from unittest import mock
+from .exceptions import NotFoundGlassError, NotFoundChopsticksError
 
 
 def create_image(height=480, width=640, color=(0, 0, 0)):
@@ -74,17 +75,81 @@ class CalcVolumeViewTests(TestCase):
         self.assertTrue(content["exist_glass"])
         self.assertTrue(content["exist_chopsticks"])
 
-    def test_glass(self):
+    @mock.patch("measurevolume.views.detect_water_area")
+    @mock.patch("measurevolume.views.get_chopsticks_length_per_pixel")
+    def test_glass(self, mock_get_chopsticks_length_per_pixel, mock_detect_water_area):
         """コップの検出をテスト"""
-        pass
+        mock_detect_water_area.return_value = create_image()
+        mock_get_chopsticks_length_per_pixel.side_effect = NotFoundChopsticksError()
 
-    def test_chopsticks(self):
+        img = create_image()
+        _, buf = cv2.imencode(".png", img)
+        img_base64 = base64.b64encode(buf).decode("utf-8")
+
+        data = {"img_base64": img_base64}
+
+        response = self.client.post(
+            reverse("calc_volume"),
+            data=json.dumps(data),
+            content_type="application/json",
+        )
+
+        content = json.loads(response.content)
+
+        self.assertTrue(content["exist_glass"])
+        self.assertFalse(content["exist_chopsticks"])
+
+    @mock.patch("measurevolume.views.detect_water_area")
+    @mock.patch("measurevolume.views.get_chopsticks_length_per_pixel")
+    def test_chopsticks(
+        self, mock_get_chopsticks_length_per_pixel, mock_detect_water_area
+    ):
         """割り箸の検出をテスト"""
-        pass
+        mock_detect_water_area.side_effect = NotFoundGlassError()
+        mock_get_chopsticks_length_per_pixel.return_value = 0.1
 
-    def test_not_exist(self):
+        img = create_image()
+        _, buf = cv2.imencode(".png", img)
+        img_base64 = base64.b64encode(buf).decode("utf-8")
+
+        data = {"img_base64": img_base64}
+
+        response = self.client.post(
+            reverse("calc_volume"),
+            data=json.dumps(data),
+            content_type="application/json",
+        )
+
+        content = json.loads(response.content)
+
+        self.assertFalse(content["exist_glass"])
+        self.assertTrue(content["exist_chopsticks"])
+
+    @mock.patch("measurevolume.views.detect_water_area")
+    @mock.patch("measurevolume.views.get_chopsticks_length_per_pixel")
+    def test_not_exist(
+        self, mock_get_chopsticks_length_per_pixel, mock_detect_water_area
+    ):
         """コップと割り箸の非検出をテスト"""
-        pass
+        mock_detect_water_area.side_effect = NotFoundGlassError()
+        mock_get_chopsticks_length_per_pixel.side_effect = NotFoundChopsticksError()
+
+        img = create_image()
+        _, buf = cv2.imencode(".png", img)
+        img_base64 = base64.b64encode(buf).decode("utf-8")
+
+        data = {"img_base64": img_base64}
+
+        response = self.client.post(
+            reverse("calc_volume"),
+            data=json.dumps(data),
+            content_type="application/json",
+        )
+
+        content = json.loads(response.content)
+
+        self.assertFalse(content["exist_glass"])
+        self.assertFalse(content["exist_chopsticks"])
 
     def test_request_type_not_post(self):
         """POSTリクエスト以外の拒否をテスト"""
