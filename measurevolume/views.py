@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.http.request import HttpRequest
 from django.http.response import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 import cv2
 import base64
@@ -16,6 +17,7 @@ def index(request):
     return render(request, "measurevolume/index.html")
 
 
+@csrf_exempt
 @require_http_methods(["POST"])
 def calc_volume(request: HttpRequest) -> JsonResponse:
     """水の容量を計算する
