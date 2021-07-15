@@ -1,8 +1,8 @@
 import os
-import torch
+# import torch
 import numpy as np
-from . import FCN_NetModel as FCN  # The net Class
-from . import CategoryDictionary as CatDic
+# from . import FCN_NetModel as FCN  # The net Class
+# from . import CategoryDictionary as CatDic
 import cv2
 import logging
 from ..exceptions import NotFoundGlassError
@@ -32,6 +32,8 @@ def detect_water_area(img: np.ndarray) -> np.ndarray:
     Raises:
         NotFoundGlassError: コップが検出できなかった場合に送出
     """
+    return img
+
     logger = logging.getLogger(__name__)
     ##################################Load net###########################################################################################
     # ---------------------Create and Initiate net and create optimizer------------------------------------------------------------------------------------
