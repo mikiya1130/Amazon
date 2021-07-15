@@ -32,6 +32,8 @@ def detect_water_area(img: np.ndarray) -> np.ndarray:
     Raises:
         NotFoundGlassError: コップが検出できなかった場合に送出
     """
+    return img
+
     logger = logging.getLogger(__name__)
     ##################################Load net###########################################################################################
     # ---------------------Create and Initiate net and create optimizer------------------------------------------------------------------------------------
