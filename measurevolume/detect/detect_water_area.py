@@ -1,8 +1,8 @@
 import os
-import torch
+# import torch
 import numpy as np
-from . import FCN_NetModel as FCN  # The net Class
-from . import CategoryDictionary as CatDic
+# from . import FCN_NetModel as FCN  # The net Class
+# from . import CategoryDictionary as CatDic
 import cv2
 import logging
 from ..exceptions import NotFoundGlassError
