@@ -113,6 +113,7 @@ function getData(existGlass, existChopsticks, volume){
 	}
 	if(errorMessages.length === 0){
 		// volumeの表示を生成
+		// windouに対する比率で文字サイズを決定
 		let ratio = 0.095;
 		let volumeSize = Math.round(window.innerHeight * ratio);
 		if(document.getElementById('volume')){
