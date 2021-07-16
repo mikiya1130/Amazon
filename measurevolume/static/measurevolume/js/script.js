@@ -2,21 +2,11 @@
 // 縦横判定の関数を削除. setInterval()のif文で直接判定
 // videoのサイズ取得->840超えなら縮小
 
+let doneProcess = true;	// 計算処理が終了しているか判定
 
 window.onload = function Init(){
 	startVideo();
 }
-// 0.5秒ごとにスマホの向き判定
-// 横向きならデータをサーバへ送信
-setInterval(() => {
-	if(window.innerHeight < window.innerWidth){
-		takePicture();
-	}else{
-		displayMessage = "画面を横向きにしてください"
-		alert(displayMessage)
-	}
-}, 500);
-
 // デフォルトでリアカメラを起動
 // 無い場合はフロントカメラを起動
 // カメラがない場合はアラートを出す
@@ -43,19 +33,36 @@ function startVideo() {
 		});
 }
 
+// 0.5秒ごとにスマホの向き判定
+// 横向きならデータをサーバへ送信
+setInterval(() => {
+	if(window.innerHeight < window.innerWidth){
+		
+		if(doneProcess===true){
+			takePicture();
+			doneProcess = false;
+		}
+		//takePicture();
+	}else{
+		displayMessage = "画面を横向きにしてください"
+		alert(displayMessage)
+	}
+}, 1000);
+
+
 function takePicture() {
 	let canvas = document.getElementById('canvas');	// videoのstreamをcanvasに書き出す方法.
 	let video = document.getElementById('local_video');
 	let ctx = canvas.getContext('2d');
-	let originai_width = video.offsetWidth;
-	let original_Height = video.offsetHeight;
+	let originalWidth = video.offsetWidth;
+	let originalHeight = video.offsetHeight;
 	let width, height;
-	if (originai_width <= 840) {
-		width = originai_width;
-		height = original_Height;
+	if (originalWidth <= 840) {
+		width = originalWidth;
+		height = originalHeight;
 	} else {
 		width = 840;
-		height = 840 * (original_Height/originai_width);
+		height = 840 * (originalHeight/originalWidth);
 	}
 	canvas.setAttribute("width", width);	// canvasに書き出すための横幅セット.
 	canvas.setAttribute("height", height);	// canvasに書き出すための縦幅セット.
@@ -96,6 +103,7 @@ function transferData(picture){
 
 // データを受け取った後の処理
 function getData(existGlass, existChopsticks, volume){
+	doneProcess = true;
 	let errorMessages = [];
 	if(existGlass === false){
 		errorMessages.push("コップを映してください");
@@ -104,19 +112,27 @@ function getData(existGlass, existChopsticks, volume){
 		errorMessages.push("割りばしを映してください");
 	}
 	if(errorMessages.length === 0){
-		document.getElementById('volume').innerHTML = volume;
+		// volumeの表示を生成
+		let ratio = 0.095;
+		let volumeSize = Math.round(window.innerHeight * ratio);
+		if(document.getElementById('volume')){
+			document.getElementById('volume').remove();
+		}
+		let volumeWrapperElement = document.getElementById('volume_wrapper');
+		let volumeElement = document.createElement('div');
+		let volumeSizeStr = 'font-size:'+String(volumeSize)+'px;';
+		volumeElement.setAttribute('style', volumeSizeStr);
+		volumeElement.setAttribute('id', 'volume');
+		volumeElement.innerHTML = Math.round(volume) + 'ml';
+		volumeWrapperElement.appendChild(volumeElement);
+		/*
+		// HTMLの要素に書き込む場合
+		// 四捨五入
+		document.getElementById('volume').innerHTML = Math.round(volume) + 'ml';
+		*/
+		
 	} else {
 		let displayMessage = '';
-		// リスト表示
-		/*
-		displayMessage += '<ul style="list-style: none">';
-		for (var i=0; i<errorMessages.length;i++){
-			displayMessage += '<li>'+ errorMessages[i] + '</li>';
-		}
-		displayMessage += '</ul>';
-		console.log(displayMessage)
-		document.getElementById('error_message').innerHTML = displayMessage;
-		*/
 		// アラート表示
 		for (var i=0; i<errorMessages.length;i++){
 			displayMessage += errorMessages[i] + '\n';
