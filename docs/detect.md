@@ -7,12 +7,12 @@
 
 ---
 
-- [ ] コップ領域検出 -> 切り取り
+- ~~[ ] コップ領域検出 -> 切り取り~~
     - コップが検出できなかった場合
     - 例外throw: NotFoundGlassError
-- [ ] コップのエッジ検出
-- [ ] 水の領域を表した2値画像
-- [ ] 2値画像返す -> server
+- ~~[ ] コップのエッジ検出~~
+- [x] 水の領域を表した2値画像
+- [x] 2値画像返す -> server
 
 ## 割り箸検出(関数名： get_chopsticks_length_per_pixel())
 
@@ -21,8 +21,8 @@
 
 ---
 
-- [ ] 割り箸検出
+- [x] 割り箸検出
     - 割り箸が検出できなかった場合
     - 例外throw: NotFoundChopsticksError
-- [ ] mm/pixel求める(割り箸の長さ21cmを基準に)
-- [ ] mm/pixel返す -> server
+- [x] mm/pixel求める(割り箸の長さ21cmを基準に)
+- [x] mm/pixel返す -> server
