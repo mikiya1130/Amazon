@@ -86,7 +86,7 @@ def detect_water_area(img: np.ndarray) -> np.ndarray:
         OutPath = "OutImage"
         if not os.path.exists(OutPath):
             os.makedirs(OutPath)
-        OutName = OutPath + os.sep + "img.png"
+        OutName = OutPath + os.sep + "water_segmentation.png"
         cv2.imwrite(OutName, FinIm)
     # ----------debug ここまで ----------
 
