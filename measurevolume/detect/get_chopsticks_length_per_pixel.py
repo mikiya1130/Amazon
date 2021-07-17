@@ -16,12 +16,14 @@ def get_chopsticks_length_per_pixel(img: np.ndarray) -> float:
         NotFoundChopsticksError: 割り箸が検出できなかった場合に送出
     """
     mask = generating_mask(img)
-    # if mask == 全部0:
-    # raise NotFoundChopsticksError
+
+    if len(mask) < 5:
+        raise NotFoundChopsticksError
     line = line_fitting(mask)
     x1, y1, x2, y2 = find_corner(mask, line)
     size_per_pixel = find_size_per_pixel(x1, y1, x2, y2)
-
+    cv2.imwrite("apple1.png", img)
+    cv2.imwrite("apple2.png", mask)
     return size_per_pixel
 
 
@@ -44,6 +46,10 @@ def generating_mask(img):
 
     bin_img[bin_img == 0] = 1
     bin_img[bin_img == 255] = 0
+
+    if np.count_nonzero(bin_img[:, :]) < 100:
+        notmask = [0]
+        return notmask
 
     # 輪郭抽出する。
     contours, _ = cv2.findContours(bin_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
