@@ -134,6 +134,5 @@ def check_chopsticks(mask):
     v1 = np.array([x1, y1])
     v2 = np.array([x2, y2])
     diff = v2 - v1
-    # np.absolute(u)
     ratio = np.abs(diff[0] / diff[1])
     return np.round(ratio)
