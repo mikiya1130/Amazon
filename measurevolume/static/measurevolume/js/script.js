@@ -118,8 +118,8 @@ function getData(existGlass, existChopsticks, volume){
 		let volumeSize = Math.round(window.innerHeight * ratio);
 		if(document.getElementById('volume')){
 			document.getElementById('volume').remove();
+			document.getElementById('dummy_button').remove();
 		}
-		//let butonElement = document.getElementById('capture_button');
 		let volumeWrapperElement = document.getElementById('volume_wrapper');
 		let volumeElement = document.createElement('div');
 		let volumeSizeStr = 'font-size:'+String(volumeSize)+'px;';
@@ -127,7 +127,12 @@ function getData(existGlass, existChopsticks, volume){
 		volumeElement.setAttribute('id', 'volume');
 		volumeElement.innerHTML = Math.round(volume) + 'ml';
 		volumeWrapperElement.appendChild(volumeElement);
-		//volumeWrapperElement.insertBefore(volumeElement, butonElement);
+
+		let dummyButtonElement = document.createElement('button');
+		dummyButtonElement.innerHTML = 'capture';
+		dummyButtonElement.setAttribute('id', 'dummy_button');
+		dummyButtonElement.setAttribute('style', 'visibility:hidden');
+		volumeWrapperElement.appendChild(dummyButtonElement);
 	} else {
 		let displayMessage = '';
 		// アラート表示

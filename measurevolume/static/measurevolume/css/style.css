@@ -13,16 +13,15 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    
 }
 
 #volume_wrapper {
     height: 15vh;
     display: flex;
+    flex-direction: row-reverse;
 }
 
 #volume {
-    text-align: center;
     margin-left: auto;
     margin-right: auto;
     color: white;
