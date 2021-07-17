@@ -1,11 +1,16 @@
+from django.conf import settings
+
 import os
-# import torch
 import numpy as np
-# from . import FCN_NetModel as FCN  # The net Class
-# from . import CategoryDictionary as CatDic
 import cv2
 import logging
+
 from ..exceptions import NotFoundGlassError
+
+if not settings.LITE:
+    import torch
+    from . import FCN_NetModel as FCN  # The net Class
+    from . import CategoryDictionary as CatDic
 
 ############################################Input parameters###################################################################################
 # -------------------------------------Input parameters-----------------------------------------------------------------------
@@ -32,7 +37,8 @@ def detect_water_area(img: np.ndarray) -> np.ndarray:
     Raises:
         NotFoundGlassError: コップが検出できなかった場合に送出
     """
-    return img[:,:,0]
+    if settings.LITE:
+        return img[:, :, 0]
 
     logger = logging.getLogger(__name__)
     ##################################Load net###########################################################################################
@@ -70,17 +76,18 @@ def detect_water_area(img: np.ndarray) -> np.ndarray:
     ImOut[:, :][Lb == 1] = 1
 
     # ----------debug ここから ----------
-    ImOverlay1 = img.copy()
-    ImOverlay1[:, :, 0][Lb == 1] = 255
-    ImOverlay1[:, :, 1][Lb == 1] = 0
-    ImOverlay1[:, :, 2][Lb == 1] = 255
-    FinIm = np.concatenate([img, ImOverlay1], axis=1)
+    if settings.OUT_IMAGE:
+        ImOverlay1 = img.copy()
+        ImOverlay1[:, :, 0][Lb == 1] = 255
+        ImOverlay1[:, :, 1][Lb == 1] = 0
+        ImOverlay1[:, :, 2][Lb == 1] = 255
+        FinIm = np.concatenate([img, ImOverlay1], axis=1)
 
-    OutPath = "OutImage/"
-    if not os.path.exists(OutPath):
-        os.makedirs(OutPath)
-    OutName = OutPath + "img.png"
-    cv2.imwrite(OutName, FinIm)
+        OutPath = "OutImage"
+        if not os.path.exists(OutPath):
+            os.makedirs(OutPath)
+        OutName = OutPath + os.sep + "water_segmentation.png"
+        cv2.imwrite(OutName, FinIm)
     # ----------debug ここまで ----------
 
     return ImOut

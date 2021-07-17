@@ -1,5 +1,9 @@
+from django.conf import settings
+
+import os
 import numpy as np
 import cv2
+
 from ..exceptions import NotFoundChopsticksError
 
 
@@ -26,9 +30,17 @@ def get_chopsticks_length_per_pixel(img: np.ndarray) -> float:
     Matched_image = Match_image(mask, line)
     x1, y1, x2, y2 = find_corner(Matched_image)
     size_per_pixel = find_size_per_pixel(x1, y1, x2, y2)
-    # cv2.imwrite("apple1.png", img)
-    # cv2.imwrite("apple2.png", mask)
-    # cv2.imwrite("apple3.png", Matched_image)
+
+    # ----------debug ここから ----------
+    if settings.OUT_IMAGE:
+        OutPath = "OutImage"
+        if not os.path.exists(OutPath):
+            os.makedirs(OutPath)
+        cv2.imwrite(OutPath + os.sep + "apple1.png", img)
+        cv2.imwrite(OutPath + os.sep + "apple2.png", mask)
+        cv2.imwrite(OutPath + os.sep + "apple3.png", Matched_image)
+    # ----------debug ここまで ----------
+
     return size_per_pixel
 
 

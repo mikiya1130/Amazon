@@ -32,6 +32,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# 水検出処理を行わない軽量モード(デフォルト：False)
+LITE = False
+
+# 水と割り箸の検出結果を画像ファイルに書き出す(デフォルト：False)
+OUT_IMAGE = False
+
+
 # Application definition
 
 INSTALLED_APPS = [
