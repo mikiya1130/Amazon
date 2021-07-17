@@ -74,7 +74,6 @@ def calc_volume(request: HttpRequest) -> JsonResponse:
         one_cnt = np.count_nonzero(water, axis=1)
         area_of_circle = math.pi * (one_cnt * mm_pixel / 2) ** 2
         volume = np.sum(area_of_circle) * mm_pixel
-        true_volume = volume / 1000
 
         exist_glass = True
         exist_chopsticks = True
@@ -82,6 +81,6 @@ def calc_volume(request: HttpRequest) -> JsonResponse:
     data = {
         "exist_glass": exist_glass,
         "exist_chopsticks": exist_chopsticks,
-        "volume": true_volume,
+        "volume": volume,
     }
     return JsonResponse(data)
