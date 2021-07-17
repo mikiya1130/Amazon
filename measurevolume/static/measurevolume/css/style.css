@@ -27,6 +27,10 @@ body {
     color: white;
 }
 
+#volume_wrapper > button {
+    width: 15vw;   
+}
+
 #canvas {
     display: none;
 }
