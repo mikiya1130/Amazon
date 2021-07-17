@@ -16,14 +16,20 @@ def get_chopsticks_length_per_pixel(img: np.ndarray) -> float:
         NotFoundChopsticksError: 割り箸が検出できなかった場合に送出
     """
     mask = generating_mask(img)
-
     if len(mask) < 5:
         raise NotFoundChopsticksError
+    check = check_chopsticks(mask)
+    if check < 4:
+        # cv2.imwrite("apple3.png", Matched_image)
+        # return check + 200
+        raise NotFoundChopsticksError
     line = line_fitting(mask)
-    x1, y1, x2, y2 = find_corner(mask, line)
+    Matched_image = Match_image(mask, line)
+    x1, y1, x2, y2 = find_corner(Matched_image)
     size_per_pixel = find_size_per_pixel(x1, y1, x2, y2)
-    cv2.imwrite("apple1.png", img)
-    cv2.imwrite("apple2.png", mask)
+    # cv2.imwrite("apple1.png", img)
+    # cv2.imwrite("apple2.png", mask)
+
     return size_per_pixel
 
 
@@ -84,11 +90,13 @@ def line_fitting(mask):
     return img
 
 
-def find_corner(mask, line):
+def Match_image(mask, line):
     comparison = np.where(mask[1] == line[1], 0, 255)
     comparison = mask & line
+    return comparison
 
-    mask = comparison
+
+def find_corner(mask):
     y_min = 1000000
     y_max = 0
     i = mask.shape[1]
@@ -114,9 +122,18 @@ def find_corner(mask, line):
 
 
 def find_size_per_pixel(x1, y1, x2, y2):
-    a = np.array([x1, y1])
-    b = np.array([x2, y2])
-    u = b - a
-    c = np.linalg.norm(u)
-    d = 210 / c
-    return d
+    v1 = np.array([x1, y1])
+    v2 = np.array([x2, y2])
+    dis = np.linalg.norm(v1 - v2)
+    per_pixel = 210 / dis
+    return per_pixel
+
+
+def check_chopsticks(mask):
+    x1, y1, x2, y2 = find_corner(mask)
+    v1 = np.array([x1, y1])
+    v2 = np.array([x2, y2])
+    diff = v2 - v1
+    # np.absolute(u)
+    ratio = np.abs(diff[0] / diff[1])
+    return np.round(ratio)
