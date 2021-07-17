@@ -19,8 +19,7 @@ def get_chopsticks_length_per_pixel(img: np.ndarray) -> float:
     if len(mask) < 5:
         raise NotFoundChopsticksError
     check = check_chopsticks(mask)
-    if check < 4:
-        # cv2.imwrite("apple3.png", Matched_image)
+    if check < 40:
         # return check + 200
         raise NotFoundChopsticksError
     line = line_fitting(mask)
@@ -29,7 +28,7 @@ def get_chopsticks_length_per_pixel(img: np.ndarray) -> float:
     size_per_pixel = find_size_per_pixel(x1, y1, x2, y2)
     # cv2.imwrite("apple1.png", img)
     # cv2.imwrite("apple2.png", mask)
-
+    # cv2.imwrite("apple3.png", Matched_image)
     return size_per_pixel
 
 
@@ -85,7 +84,7 @@ def line_fitting(mask):
     [vx, vy, x, y] = cv2.fitLine(cnt, cv2.DIST_L2, 0, 0.01, 0.01)
     lefty = int((-x * vy / vx) + y)
     righty = int(((cols - x) * vy / vx) + y)
-    img = cv2.line(maskb, (cols - 1, righty), (0, lefty), (0, 255, 0), 1)
+    img = cv2.line(maskb, (cols - 1, righty), (0, lefty), (0, 255, 0), 10)
 
     return img
 
@@ -97,28 +96,28 @@ def Match_image(mask, line):
 
 
 def find_corner(mask):
-    y_min = 1000000
-    y_max = 0
-    i = mask.shape[1]
-    memory_x_min = 0
-    memory_x_max = 0
+    x_min = 1000000
+    x_max = 0
+    i = mask.shape[0]
+    memory_y_min = 0
+    memory_y_max = 0
 
     for counter in range(i):
-        y_columns = mask[:, counter, 1]
-        y_positions = np.where(y_columns != 0)
-        check = np.array(y_positions)
+        x_columns = mask[counter, :, 1]
+        x_positions = np.where(x_columns != 0)
+        check = np.array(x_positions)
         if check.size != 0:
-            y_min_tmp = np.min(y_positions)
-            y_max_tmp = np.max(y_positions)
+            x_min_tmp = np.min(x_positions)
+            x_max_tmp = np.max(x_positions)
 
-            if y_min_tmp < y_min:
-                y_min = y_min_tmp
-                memory_x_min = counter
-            if y_max_tmp > y_max:
-                y_max = y_max_tmp
-                memory_x_max = counter
+            if x_min_tmp < x_min:
+                x_min = x_min_tmp
+                memory_y_min = counter
+            if x_max_tmp > x_max:
+                x_max = x_max_tmp
+                memory_y_max = counter
 
-    return memory_x_min, y_min, memory_x_max, y_max
+    return x_min, memory_y_min, x_max, memory_y_max
 
 
 def find_size_per_pixel(x1, y1, x2, y2):
