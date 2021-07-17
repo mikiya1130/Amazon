@@ -1,3 +1,4 @@
+from measurevolume.detect.water_area_correction import water_area_correction
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.http.request import HttpRequest
@@ -9,7 +10,7 @@ import base64
 import json
 import numpy as np
 import math
-from .detect import detect_water_area, get_chopsticks_length_per_pixel
+from .detect import detect_water_area, get_chopsticks_length_per_pixel, water_area_correction
 from .exceptions import NotFoundGlassError, NotFoundChopsticksError
 
 
@@ -69,7 +70,8 @@ def calc_volume(request: HttpRequest) -> JsonResponse:
         exist_chopsticks = True
 
     if exist_glass and exist_chopsticks:
-        one_cnt = np.count_nonzero(img, axis=1)
+        water = water_area_correction(img)
+        one_cnt = np.count_nonzero(water, axis=1)
         area_of_circle = math.pi * (one_cnt * mm_pixel / 2) ** 2
         volume = np.sum(area_of_circle) * mm_pixel
 
