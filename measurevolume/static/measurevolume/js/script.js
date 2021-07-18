@@ -3,6 +3,7 @@
 window.onload = function Init(){
 	startVideo();
 }
+
 // デフォルトでリアカメラを起動
 // 無い場合はフロントカメラを起動
 // カメラがない場合はアラートを出す
@@ -129,7 +130,6 @@ function getData(existGlass, existChopsticks, volume){
 		volumeWrapperElement.appendChild(volumeElement);
 
 		let dummyButtonElement = document.createElement('button');
-		dummyButtonElement.innerHTML = 'capture';
 		dummyButtonElement.setAttribute('id', 'dummy_button');
 		dummyButtonElement.setAttribute('style', 'visibility:hidden');
 		volumeWrapperElement.appendChild(dummyButtonElement);
