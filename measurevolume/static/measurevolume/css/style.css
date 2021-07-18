@@ -33,10 +33,12 @@ body {
 }
 
 .capture_button {
+    background-color: silver;
 	cursor:pointer;
 	border-top:2px solid rgba(255,255,255,0.2);
 	border-bottom:2px solid rgba(0,0,0,0.2);
 	border-radius:4px;
+    margin: 5px;
 }
 
 .capture_button:hover {
