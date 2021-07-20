@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write("<script src='{% static 'measurevolume/js/jquery-3.6.0.min.js' %}''><\/script>");
+      </script>
+    <link rel="stylesheet" type="text/css" href="{% static 'measurevolume/css/style.css' %}">
+    <script type="text/javascript" src="{% static 'measurevolume/js/script.js' %}" charset="UTF-8" defer></script>
+</head>
+
+<body>
+    <div class="video_wrapper">
+        <video id="local_video"autoplay></video>
+    </div>
+    <div class="canvas_wrapper">
+        <canvas id="canvas"></canvas>
+    </div>
+    <div id="volume_wrapper" class="volume_wrapper">
+        <button id="capture_button" class="capture_button" onclick="takePicture()"></button>
+    </div>
+    
+</body>
+</html>

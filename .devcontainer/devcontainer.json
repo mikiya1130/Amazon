@@ -1,0 +1,16 @@
+{
+    "name": "Amazon",
+
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "..",
+    },
+
+    "extensions": [
+        "ms-python.python",
+        "njpwerner.autodocstring",
+        "donjayamanne.githistory",
+    ],
+
+    "forwardPorts": [8000]
+}
