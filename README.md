@@ -57,3 +57,9 @@ $ python generate_secretkey_setting.py > .env
 $ python manage.py runserver
 ```
 [http://localhost:8000](http://localhost:8000)にアクセス
+
+## ライセンス
+
+[MITライセンス](https://github.com/mikiya1130/Amazon/blob/master/LICENSE)
+
+水の検出には[Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode)で保護された[こちら](https://zenodo.org/record/3697767)のソースコード(一部改変含む)及び学習済みデータを用いています  
