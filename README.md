@@ -15,8 +15,8 @@
 
 ***デモ：***
 
-(1回目50mL追加、2回目100mL追加)  
-![Demo](https://user-images.githubusercontent.com/63896499/126353857-6919be5a-173d-4cf1-87a4-37c5679e635e.mp4)  
+![デモ動画](https://user-images.githubusercontent.com/63896499/126353857-6919be5a-173d-4cf1-87a4-37c5679e635e.mp4)(1回目50mL追加、2回目100mL追加)  
+  
 ![water](https://user-images.githubusercontent.com/63896499/126361508-ff1f8ab8-d81e-4547-80e6-571268936071.png)
 ![chopsticks](https://user-images.githubusercontent.com/63896499/126361524-9de9b8f4-3b80-4538-8f30-85f277539c38.png)
 
